@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="libs">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/New Unity Project 2/libs/unity-classes.jar!/" />
+      <root url="jar://$PROJECT_DIR$/New Unity Project 2/libs/QCARUnityPlayer.jar!/" />
+      <root url="jar://$PROJECT_DIR$/New Unity Project 2/libs/Vuforia.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
