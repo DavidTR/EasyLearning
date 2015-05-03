@@ -1,40 +1,6 @@
-Base path: C:/Program Files (x86)/Unity/Editor/Data
-Pipe name: \\.\pipe\UnityShaderCompiler-32bit-2-5944
+Base path: C:/Program Files/Unity/Editor/Data
+Pipe name: \\.\pipe\UnityShaderCompiler-32bit-2-5680
 Cmd: getPlatforms
-Cmd: compileSnippet
-  api=9 type=0 insize=7340 outsize=3920 kw=DIRECTIONAL SHADOWS_OFF LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF ok=1
-Cmd: compileSnippet
-  api=5 type=0 insize=7340 outsize=4672 kw=DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF ok=1
-Cmd: compileSnippet
-  api=9 type=0 insize=7340 outsize=5402 kw=DIRECTIONAL SHADOWS_OFF LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF VERTEXLIGHT_ON ok=1
-Cmd: compileSnippet
-  api=5 type=0 insize=7340 outsize=4696 kw=DIRECTIONAL SHADOWS_SCREEN SHADOWS_NATIVE LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF ok=1
-Cmd: compileSnippet
-  api=5 type=0 insize=7340 outsize=6122 kw=DIRECTIONAL SHADOWS_SCREEN SHADOWS_NATIVE LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF VERTEXLIGHT_ON ok=1
-Cmd: compileSnippet
-  api=9 type=1 insize=7340 outsize=7 kw=DIRECTIONAL SHADOWS_OFF LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF ok=1
-Cmd: compileSnippet
-  api=5 type=1 insize=7340 outsize=6 kw=DIRECTIONAL SHADOWS_SCREEN SHADOWS_NATIVE LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF ok=1
-Cmd: compileSnippet
-  api=9 type=0 insize=3879 outsize=2575 kw=POINT ok=1
-Cmd: compileSnippet
-  api=5 type=0 insize=3879 outsize=1998 kw=DIRECTIONAL ok=1
-Cmd: compileSnippet
-  api=5 type=0 insize=3879 outsize=2893 kw=SPOT ok=1
-Cmd: compileSnippet
-  api=5 type=0 insize=3879 outsize=2645 kw=POINT_COOKIE ok=1
-Cmd: compileSnippet
-  api=5 type=0 insize=3879 outsize=2449 kw=DIRECTIONAL_COOKIE ok=1
-Cmd: compileSnippet
-  api=9 type=1 insize=3879 outsize=7 kw=POINT ok=1
-Cmd: compileSnippet
-  api=9 type=1 insize=3879 outsize=7 kw=DIRECTIONAL ok=1
-Cmd: compileSnippet
-  api=9 type=1 insize=3879 outsize=7 kw=SPOT ok=1
-Cmd: compileSnippet
-  api=9 type=1 insize=3879 outsize=7 kw=POINT_COOKIE ok=1
-Cmd: compileSnippet
-  api=9 type=1 insize=3879 outsize=7 kw=DIRECTIONAL_COOKIE ok=1
 Unhandled exception: Readfile from pipe failed. GLE=Ha terminado la canalización.
 
 
