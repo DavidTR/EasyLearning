@@ -1,8 +1,8 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\crear_munyecos.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\operationSelection.js">
     <Files>
-      <File FileName="Assets\crear_munyecos.js" Line="36" Column="32" />
+      <File FileName="Assets\Scripts\operationSelection.js" Line="18" Column="31" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
