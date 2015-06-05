@@ -48,6 +48,7 @@
   <ItemGroup>
      <Compile Include="Assets\Cha_Data\Script\CharaView.js" />
      <Compile Include="Assets\Scripts\crear_munyecos.js" />
+     <Compile Include="Assets\Scripts\dataInput.js" />
      <Compile Include="Assets\Scripts\operationSelection.js" />
      <None Include="Assets\Plugins\Android\AndroidManifest.xml" />
      <None Include="Assets\link.xml" />
