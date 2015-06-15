@@ -7,14 +7,16 @@ var hit : RaycastHit;															// Objeto con el que colisiona el rayo.
 @HideInInspector
 var dataInputForm: GameObject;										// Formulario que servira para recibir los datos sobre la operacion.
 @HideInInspector
-var dataInput: boolean;													// ¿Estamos recogiendo datos?
+var dataIn: boolean;													// ¿Estamos recogiendo datos?
 @HideInInspector
 var operation : operations;
 private var targetPosition: Vector3;
+@HideInInspector
+static var tipoOp: String;
 
 function Start () {
 	dataInputForm = GameObject.Find("operationDataInput");
-	dataInput = false;
+	dataIn = false;
 	targetPosition = Vector3(0,-5,10);
 }
 
@@ -36,7 +38,7 @@ function Update () {
        */     
        
     // PRUEBAS EN PC
-	if (Input.GetButtonDown("Fire1") && !dataInput) {
+	if (Input.GetButtonDown("Fire1") && !dataIn) {
 		var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
        if (Physics.Raycast(ray, hit, 100)) {
@@ -45,12 +47,12 @@ function Update () {
 	            operation = operations.addition;
 	            adjustDataInput();
 	         }
+	         // Para añadir mas operaciones, agregar botones extra aqui.
         }
 	}
 }
 
 function adjustDataInput () {
-
 	while (true) {
 			dataInputForm.transform.position.y += Time.deltaTime*3.5;
 	
@@ -60,5 +62,20 @@ function adjustDataInput () {
 			yield WaitForSeconds(0.0001);
 	}
 	
-	dataInput = true;
+	switch (operation) {
+		case operations.addition:	     
+				tipoOp = "+";
+				break;
+		case operations.substraction: 
+				tipoOp = "-";
+				break;
+		case operations.product: 
+				tipoOp = "*";
+				break;
+		case operations.division: 
+				tipoOp = "/";
+				break;
+	}
+	
+	dataIn = true;
 }
