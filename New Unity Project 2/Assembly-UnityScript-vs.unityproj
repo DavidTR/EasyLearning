@@ -50,6 +50,7 @@
      <Compile Include="Assets\Scripts\crear_munyecos.js" />
      <Compile Include="Assets\Scripts\dataInput.js" />
      <Compile Include="Assets\Scripts\operationSelection.js" />
+     <Compile Include="Assets\Scripts\reproducirAnimacion.js" />
      <None Include="Assets\Plugins\Android\AndroidManifest.xml" />
      <None Include="Assets\link.xml" />
      <None Include="Assets\Qualcomm Augmented Reality\Shaders\VertexLitWithZ.shader" />
