@@ -2,9 +2,9 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\crear_munyecos.js">
     <Files>
-      <File FileName="Assets\Scripts\crear_munyecos.js" Line="21" Column="1" />
+      <File FileName="Assets\Scripts\crear_munyecos.js" Line="133" Column="15" />
       <File FileName="Assets\Scripts\operationSelection.js" Line="48" Column="25" />
-      <File FileName="Assets\Scripts\dataInput.js" Line="56" Column="17" />
+      <File FileName="Assets\Scripts\dataInput.js" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
