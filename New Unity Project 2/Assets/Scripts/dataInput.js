@@ -53,15 +53,15 @@ function OnGUI() {
 			else 
 				Application.LoadLevel("AROperations");
 				
-			print("=");
+			//print("=");
 		}
 		
 		// Si los numeros no estan en el rango correcto se muestra un error.
 		if (!numerosEnRango)
 			ventanaAviso = GUILayout.Window (0, ventanaAviso, rellenarVentana, "Error: Numeros fuera de rango");
 		
-		if (GUI.Button(new Rect(Screen.width/2.45 , Screen.height/1.3, 40, 30), operationSelection.tipoOp))
-			print("+");
+		if (GUI.Button(new Rect(Screen.width/2.45 , Screen.height/1.3, 40, 30), operationSelection.tipoOp)) {}
+			//print("+");
 	}
 }
 

@@ -19,15 +19,11 @@ var munyecosDchaNav : GameObject[]; // Vector de instancias de muñecos navegaci
 @HideInInspector
 var agente : NavMeshAgent[]; // Vector de componentes NavMeshAgent de cada muñeco (replicados de prefab)
 @HideInInspector
-var yaEsta : int = 0;
-@HideInInspector
 var operationSelect : operationSelection;
 @HideInInspector
 var numero1 : int;
 @HideInInspector
 var numero2 : int;
-@HideInInspector
-var tipoOperacion : String;
 @HideInInspector
 var generadosIzquierda : boolean = false;
 private var izquierda : int = 0;
@@ -36,32 +32,32 @@ private var derecha : int = 1;
 
 function Start () {
 
+	//operationSelect = Camera.main.GetComponent.<operationSelection>();
+
 	// Recogemos los numeros introducidos por el usuario.
 	//numero1 = dataInput.num1;
 	//numero2 = dataInput.num2;
-	operationSelect = Camera.main.GetComponent.<operationSelection>();
 	
+	// Adicionalmente se recoge el tipo de operacion (string).
+	//var tipoOperacion = operationSelection.tipoOp;
+	
+	var tipoOperacion = "+";
 	numero1 = 5;
 	numero2 = 4;
 	
 	// Reservamos espacio para los arrays de muñecos.
 	munyecosIzq = new GameObject[numero1];
 	munyecosDcha = new GameObject[numero2];
-	
-	// Adicionalmente se recoge el tipo de operacion.
-	tipoOperacion = operationSelection.tipoOp;
-	
+		
 	// Instanciamos todos los muñecos de la escena.
 	yield StartCoroutine(instanciarMunecos(numero1, izquierda));
-	instanciarMunecos(numero2, derecha);
-	
-	//yaEsta = 1;
-	
+	yield StartCoroutine(instanciarMunecos(numero2, derecha));
+		
 	// Hacer que los muñecos anden al destino.
 	switch (tipoOperacion) {
-		case operationSelection.operation.addition:	operacionSuma();
+		case "+": operacionSuma();
 			break;
-		case operationSelection.operation.substraction:	operacionResta();
+		case "-":	operacionResta();
 			break;
 	}
 	
@@ -142,31 +138,67 @@ function instanciarMunecos (numMunecos : int, lado : int) {
 }
 
 function operacionSuma () {
+	munyecosIzqNav = new GameObject[numero1];
+	munyecosDchaNav = new GameObject[numero2];
 	
+	// Creamos los muñecos de navegacion en dos partes para que los de la primera fila se vayan moviendo antes y no haya choques.
+	if (numero1 >= 3) {
+		for (var i=2; i>=0; i--) {
+			munyecosIzqNav[i] = GameObject.Instantiate(munyecosIzq[i], munyecosIzq[i].transform.position, munyecosIzq[i].transform.rotation);
+			
+			// Calcular posicion de destino para cada muñeco.
+			munyecosIzqNav[i].GetComponent.<NavMeshAgent>().SetDestination(new Vector3(230, 0, 15));
+			yield WaitForSeconds(1);
+		}
+	}
+	
+	yield WaitForSeconds(2);
+	
+	for (i=numero1-1; i>=3; i--) {
+		munyecosIzqNav[i] = GameObject.Instantiate(munyecosIzq[i], munyecosIzq[i].transform.position, munyecosIzq[i].transform.rotation);
+		
+		// Calcular posicion de destino para cada muñeco.
+		munyecosIzqNav[i].GetComponent.<NavMeshAgent>().SetDestination(new Vector3(230, 0, 15));
+		yield WaitForSeconds(0.75);
+	}
+	
+	yield WaitForSeconds(2);
+	
+	
+	// Creamos los muñecos de navegacion en dos partes para que los de la primera fila se vayan moviendo antes y no haya choques.
+	if (numero2 >= 3) {
+		for (var j=2; j>=0; j--) {
+			munyecosDchaNav[j] = GameObject.Instantiate(munyecosDcha[j], munyecosDcha[j].transform.position, munyecosDcha[j].transform.rotation);
+			
+			// Calcular posicion de destino para cada muñeco.
+			munyecosDchaNav[j].GetComponent.<NavMeshAgent>().SetDestination(new Vector3(230, 0, 15));
+			yield WaitForSeconds(1);
+		}
+	}
+	
+	yield WaitForSeconds(2);
+	
+	for (j=numero2-1; j>=3; j--) {
+		munyecosDchaNav[j] = GameObject.Instantiate(munyecosDcha[j], munyecosDcha[j].transform.position, munyecosDcha[j].transform.rotation);
+		
+		// Calcular posicion de destino para cada muñeco.
+		munyecosDchaNav[j].GetComponent.<NavMeshAgent>().SetDestination(new Vector3(230, 0, 15));
+		yield WaitForSeconds(0.75);
+	}
+		
 }
 
 function operacionResta() {
-	
+	munyecosIzqNav = new GameObject[numero1-numero2];
+
+	for (var i=0; i<(numero1-numero2); i++) {
+		munyecosIzqNav[i] = GameObject.Instantiate(munyecosIzq[i], munyecosIzq[i].transform.position, munyecosIzq[i].transform.rotation);
+		
+		// Calcular posicion de destino para cada muñeco.
+		munyecosIzqNav[i].GetComponent.<NavMeshAgent>().SetDestination(new Vector3(230, 0, 15));
+	}	
 }
 
 function Update () {
-	//if(yaEsta) Mover();
+
 }
-/* Diferenciar entre los dos arrays.
-function Mover() {
-	agente = new NavMeshAgent[4];
-	var target : Vector3;
-	var x : int;
-	var y : int;
-	var z : int;
-	
-	for(var i = 0 ; i < 4 ; i++){
-		agente[i] = munyecos[i].GetComponent.<NavMeshAgent>();                   // Obtencion del componente NavMeshAgent de cada muñeco
-		x = posicion[i].x;
-		y = posicion[i].y;
-		z = posicion[i].z + 180;
-		target = new Vector3(x, y, z);
-		agente[i].SetDestination(target);                                        // Destino del componente NavMeshAgent
-		yield WaitForSeconds(1);                                                // Retraso al comenzar a moverse hacia el destino
-	}
-}*/
