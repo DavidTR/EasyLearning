@@ -25,7 +25,7 @@ var numero1 : int;
 @HideInInspector
 var numero2 : int;
 @HideInInspector
-var generadosIzquierda : boolean = false;
+var arraysRellenos : boolean;
 private var izquierda : int = 0;
 private var derecha : int = 1;
 
@@ -60,7 +60,6 @@ function Start () {
 		case "-":	operacionResta();
 			break;
 	}
-	
 }
 
 function instanciarMunecos (numMunecos : int, lado : int) {
@@ -141,7 +140,7 @@ function operacionSuma () {
 	munyecosIzqNav = new GameObject[numero1];
 	munyecosDchaNav = new GameObject[numero2];
 	var nuevaLinea : boolean;
-	var direccionBase = new Vector3(200, 0, 15);
+	var direccionBase = new Vector3(200, 0, 35);
 	desplazamientoDestino.x = 0;
 	desplazamientoDestino.y = 0;
 	desplazamientoDestino.z = 0;
@@ -227,7 +226,8 @@ function operacionSuma () {
 			yield WaitForSeconds(0.75);
 		}
 	}
-	
+	arraysRellenos = true;
+
 }
 
 function operacionResta() {
@@ -239,16 +239,28 @@ function operacionResta() {
 		// Calcular posicion de destino para cada muñeco.
 		munyecosIzqNav[i].GetComponent.<NavMeshAgent>().SetDestination(new Vector3(230, 0, 15));
 	}	
+	arraysRellenos = true;
+
 }
 
 function Update () {
-/*
-	// Rotamos todos los muñecos para que el usuario les vea.
-	for (i=0; i<numero1; i++) {
-			munyecosIzqNav[i].transform.eulerAngles.y = 90;
-	}
+	var agente : NavMeshAgent;
 	
-	for (j=0; j<numero2; j++)
-			munyecosDchaNav[j].transform.eulerAngles.y = 90;
-*/
+	if (arraysRellenos) {
+		
+		// Rotamos todos los muñecos para que el usuario les vea.
+		for (var i=0; i<numero1; i++) {
+			agente = munyecosIzqNav[i].GetComponent.<NavMeshAgent>();
+			
+			if (munyecosIzqNav[i].transform.eulerAngles.y != 180 && agente.remainingDistance != Mathf.Infinity && agente.pathStatus == NavMeshPathStatus.PathComplete && agente.remainingDistance == 0)
+				munyecosIzqNav[i].transform.eulerAngles.y = 180;
+		}
+		
+		for (var j=0; j<numero2; j++) {
+			agente = munyecosDchaNav[j].GetComponent.<NavMeshAgent>();
+			
+			if (munyecosDchaNav[j].transform.eulerAngles.y != 180 && agente.remainingDistance != Mathf.Infinity && agente.pathStatus == NavMeshPathStatus.PathComplete && agente.remainingDistance == 0)
+				munyecosDchaNav[j].transform.eulerAngles.y = 180;
+		}
+	}
 }
