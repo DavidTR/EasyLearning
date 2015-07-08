@@ -9,10 +9,12 @@ var dataIn: boolean;													// ¿Estamos recogiendo datos?
 private var targetPosition: Vector3;
 @HideInInspector
 static var tipoOp: String;
+private var operacionSeleccionada : boolean;
 
 function Start () {
 	dataInputForm = GameObject.Find("operationDataInput");
 	dataIn = false;
+	operacionSeleccionada = false;
 	targetPosition = Vector3(0,-5,10);
 }
 
@@ -40,17 +42,26 @@ function Update () {
        if (Physics.Raycast(ray, hit, 100)) {
 	       	if (hit.collider.gameObject.name == "addOperation") {
 
-	            tipoOp = "+";
-	            adjustDataInput();
+	           
+	            if (!operacionSeleccionada) {
+	            	adjustDataInput();
+	            	 tipoOp = "+";
+	            }
 	         }
 	         else 	if (hit.collider.gameObject.name == "substractOperation") {
 
-	            tipoOp = "-";
-	            adjustDataInput();
+	            if (!operacionSeleccionada) {
+	            	adjustDataInput();
+	            	tipoOp = "-";
+	            }
 	         }
 	         // Para añadir mas operaciones, agregar botones extra aqui.
         }
 	}
+}
+
+function OnGUI() {
+	
 }
 
 function adjustDataInput () {
@@ -64,4 +75,5 @@ function adjustDataInput () {
 	}
 		
 	dataIn = true;
+	operacionSeleccionada = true;
 }
