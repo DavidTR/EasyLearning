@@ -18,6 +18,8 @@ private var restaValida : boolean;
 private var sinNumeros : boolean;
 @HideInInspector
 var ventanaAviso : Rect;
+@HideInInspector
+var hit : RaycastHit;															// Objeto con el que colisiona el rayo.
 
 
 function Start () {
@@ -33,6 +35,20 @@ function Update () {
 	if (operationSelect.dataIn) {
 		mostrarBotones = true;
 		operationSelect.dataIn = false;
+		GameObject.Find("backButton").GetComponent.<BoxCollider>().enabled = true;
+	}
+	
+	if (Input.GetButtonDown("Fire1")) {
+		var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+       if (Physics.Raycast(ray, hit, 100)) {
+	       	if (hit.collider.gameObject.name == "backButton") {
+	            	mostrarBotones = false;
+	            	transform.position = new Vector3 (0, -12, 15);
+	            	operationSelect.operacionSeleccionada = false;
+	            	GameObject.Find("backButton").GetComponent.<BoxCollider>().enabled = false;
+	         }
+        }
 	}
 }
 
@@ -52,15 +68,14 @@ function OnGUI() {
 			else {
 				num1 = int.Parse(operando1);
 				num2 = int.Parse(operando2);
+				
+				if (num1 < 0 || num1 > 5 || num2 < 0 || num2 > 5)
+					numerosEnRango = false;
+				else if (operationSelect.tipoOp == "-" && (num1 < num2))
+					restaValida = false;
+				else 
+					Application.LoadLevel("AROperations");
 			}
-			
-			print(operationSelect.tipoOp);
-			if (num1 < 0 || num1 > 5 || num2 < 0 || num2 > 5)
-				numerosEnRango = false;
-			else if (operationSelect.tipoOp == "-" && (num1 < num2))
-				restaValida = false;
-			else 
-				Application.LoadLevel("AROperations");
 		}
 		
 		// Si los numeros no estan en el rango correcto se muestra un error.
@@ -74,7 +89,6 @@ function OnGUI() {
 			ventanaAviso = GUILayout.Window (3, ventanaAviso, rellenarVentana, "Error: No has introducido numeros");
 			
 		if (GUI.Button(new Rect(Screen.width/2.45 , Screen.height/1.3, 40, 30), operationSelection.tipoOp)) {}
-			//print("+");
 	}
 }
 

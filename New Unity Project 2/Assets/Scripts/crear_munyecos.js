@@ -22,8 +22,6 @@ var munyecosDchaNav : GameObject[]; // Vector de instancias de muñecos navegaci
 @HideInInspector
 var desplazamientoDestino : Vector3;
 @HideInInspector
-var operationSelect : operationSelection;
-@HideInInspector
 var numero1 : int;
 @HideInInspector
 var numero2 : int;
@@ -41,11 +39,12 @@ private var nuevaLinea : boolean;
 private var direccionBase = new Vector3(200, 0, 35);
 private var izquierda : int = 0;
 private var derecha : int = 1;
+private var colocados : boolean[];
+@HideInInspector
+var hit : RaycastHit;		
 
 /*** START ***/
 function Start () {
-
-	//operationSelect = Camera.main.GetComponent.<operationSelection>();
 
 	// Recogemos los numeros introducidos por el usuario.
 	numero1 = dataInput.num1;
@@ -55,8 +54,8 @@ function Start () {
 	var tipoOperacion = operationSelection.tipoOp;
 	
 	//var tipoOperacion = "+";
-	//numero1 = 5;
-	//numero2 = 5;
+	//numero1 = 2;
+	//numero2 = 3;
 	
 	// Se utiliza para saber si los muñecos han llegado todos a su destino, momento en el que instanciamos el numero del resultado.
 	enPosicion = -1;
@@ -92,6 +91,11 @@ function Start () {
 				GameObject.Instantiate(simboloResta, new Vector3(-100, 0, -20), Quaternion.identity);
 			break;
 	}
+	
+	colocados = new boolean[resultadoOperacion];
+	
+	for (var i=0; i<resultadoOperacion; i++)
+		colocados[i] = false;
 }
 
 /*** INSTANCIAR MUÑECOS ***/
@@ -230,12 +234,15 @@ function operacionSuma () {
 			
 			// Calcular posicion de destino para cada muñeco.
 			desplazamientoDestino.x = (j+numero1)%3;
+			
+			desplazamientoDestino.z = -(j+numero1)/3;
 				
 			munyecosDchaNav[j].GetComponent.<NavMeshAgent>().SetDestination(direccionBase + desplazamientoDestino*50);
 			munyecosDchaNav[j].GetComponent.<Animation>().Play("Walk");
 			yield WaitForSeconds(0.75);
 		}
 	}
+	
 	arraysRellenos = true;
 	enPosicion = 0;
 }
@@ -301,20 +308,24 @@ function Update () {
 		for (var i=0; i<munyecosIzqNav.Length; i++) {
 			agente = munyecosIzqNav[i].GetComponent.<NavMeshAgent>();
 			
-			if (!(Mathf.Approximately(munyecosIzqNav[i].transform.eulerAngles.y, 180.000)) && agente.pathStatus == NavMeshPathStatus.PathComplete && agente.remainingDistance == 0) {
+			if (!colocados[i] && agente.pathStatus == NavMeshPathStatus.PathComplete && Mathf.Approximately(agente.remainingDistance, 0.000)) {
+				colocados[i] = true;
 				munyecosIzqNav[i].transform.eulerAngles.y = 180.000;
 				munyecosIzqNav[i].GetComponent.<Animation>().Play("Wait");
 				enPosicion++;
+				print("En posicion: Izquierda "+ i);
 			}
 		}
 		
 		for (var j=0; j<munyecosDchaNav.Length; j++) {
 			agente = munyecosDchaNav[j].GetComponent.<NavMeshAgent>();
 			
-			if (!(Mathf.Approximately(munyecosDchaNav[j].transform.eulerAngles.y, 180.000)) && agente.pathStatus == NavMeshPathStatus.PathComplete && agente.remainingDistance == 0) {
+			if (!colocados[numero1+j] && agente.pathStatus == NavMeshPathStatus.PathComplete && Mathf.Approximately(agente.remainingDistance, 0.000)) {
+				colocados[numero1+j] = true;
 				munyecosDchaNav[j].transform.eulerAngles.y = 180.000;
 				munyecosDchaNav[j].GetComponent.<Animation>().Play("Wait");
 				enPosicion++;
+				print("En posicion: Derecha "+ j);
 			}
 		}
 	}
@@ -323,4 +334,24 @@ function Update () {
 		GameObject.Instantiate(numeros[resultadoOperacion], new Vector3(250, 0, -150), Quaternion.Euler(0,180,0));
 		finOperacion = true;
 	}
+	
+	if (finOperacion) {
+		GameObject.Find("botonAtras").GetComponent.<MeshRenderer>().enabled = true;
+		GameObject.Find("botonAtras").GetComponent.<BoxCollider>().enabled = true;
+	}	
+	
+	if (Input.GetButtonDown("Fire1")) {
+		var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        print("Boton");
+
+       if (Physics.Raycast(ray, hit, 1000)) {
+	       	if (hit.collider.gameObject.name == "botonAtras") {
+	       		operationSelection.tipoOp = "";	
+	            Application.LoadLevel("userInterface");
+	           
+	         }
+	         print(hit.collider.gameObject.name);
+        }
+	}
 }
+

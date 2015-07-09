@@ -9,7 +9,8 @@ var dataIn: boolean;													// ¿Estamos recogiendo datos?
 private var targetPosition: Vector3;
 @HideInInspector
 static var tipoOp: String;
-private var operacionSeleccionada : boolean;
+@HideInInspector
+var operacionSeleccionada : boolean;
 
 function Start () {
 	dataInputForm = GameObject.Find("operationDataInput");
@@ -41,7 +42,6 @@ function Update () {
 
        if (Physics.Raycast(ray, hit, 100)) {
 	       	if (hit.collider.gameObject.name == "addOperation") {
-
 	           
 	            if (!operacionSeleccionada) {
 	            	adjustDataInput();
