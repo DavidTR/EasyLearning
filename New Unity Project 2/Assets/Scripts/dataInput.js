@@ -1,40 +1,44 @@
 ﻿#pragma strict
 
+/**
+	dataInput script: Controls the way the user introduces the numbers to execute a certain math operation.
+**/
+
+private var operationSelect : operationSelection;								// Reference to the operationSelection script.
+private var mostrarBotones : boolean;											// Boolean variable that controls when can the fields be visible.
 @HideInInspector
-var operationSelect : operationSelection;
+var operando1 : String;																// First number of the operation.
 @HideInInspector
-var mostrarBotones : boolean;
+var operando2 : String;																// Second number of the operation.
+private var numerosEnRango : boolean;											// Boolean variable that controls whether we have valid numbers or not.
+private var restaValida : boolean;													// Boolean variable that controls if the substraction operation returns a positive value (greater than 0).
+private var sinNumeros : boolean;												// Boolean variable that controls if the number fields are filled before executing the operation.
+private var ventanaAviso : Rect;													// Warning window.
+private var hit : RaycastHit;															// Object hit with the collisiion ray.
 @HideInInspector
-var operando1 : String;
+static var num1: int;																	// First number of the operation parsed to integer.
 @HideInInspector
-var operando2 : String;
-@HideInInspector
-static var num1: int;
-@HideInInspector
-static var num2: int;
-@HideInInspector
-var numerosEnRango : boolean;
-private var restaValida : boolean;
-private var sinNumeros : boolean;
-@HideInInspector
-var ventanaAviso : Rect;
-@HideInInspector
-var hit : RaycastHit;															// Objeto con el que colisiona el rayo.
+static var num2: int;																	// Second number of the operation parsed to integer.
 
 
+/** 
+	Start function: Gets the reference to the operationSelection script, initializes the size of the warning window
+**/
 function Start () {
 	operationSelect = Camera.main.GetComponent.<operationSelection>();
 	
-	// Tamaño de la ventana de aviso de numeros fuera de rango.
 	ventanaAviso = new Rect(Screen.width/2-125, Screen.height/2-25, 250, 50);
 	numerosEnRango = true;
 	restaValida = true;
 }
 
+/**
+	Update function: If the dataInput form is in position, we let the user introduce the numbers in the fields originated int the OnGUI function.
+**/
 function Update () {
-	if (operationSelect.dataIn) {
+	if (operationSelect.insertarDatos) {
 		mostrarBotones = true;
-		operationSelect.dataIn = false;
+		operationSelect.insertarDatos = false;
 		GameObject.Find("backButton").GetComponent.<BoxCollider>().enabled = true;
 	}
 	
@@ -52,6 +56,9 @@ function Update () {
 	}
 }
 
+/**
+	OnGUI function: This function creates the GUI forms, takes the numbers and checks them. If necessary, warning windows will show up.
+**/
 function OnGUI() {
 	if (mostrarBotones) {
 			
@@ -78,7 +85,6 @@ function OnGUI() {
 			}
 		}
 		
-		// Si los numeros no estan en el rango correcto se muestra un error.
 		if (!numerosEnRango)
 			ventanaAviso = GUILayout.Window (1, ventanaAviso, rellenarVentana, "Error: Numeros fuera de rango");
 		
@@ -92,10 +98,11 @@ function OnGUI() {
 	}
 }
 
-// Esta funcion dice lo que la ventana de aviso va a llevar en su interior. Es un simple boton.
+/**
+	rellenarVentana function: This function is necessary to show the warning message in case they are needed.
+**/
 function rellenarVentana (indice: int) {
 
-	// Aqui deberia ir un Aceptar, pero es necesario un padding para incluir este mensaje en la ventana, no en el boton. Investigar.
 	switch (indice) {
 		case 1:
 			if (GUILayout.Button (" Introduce numeros entre 0 y 5 "))

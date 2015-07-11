@@ -1,11 +1,10 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\crear_munyecos.js">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\AROperation.js">
     <Files>
-      <File FileName="New Unity Project 2.sln" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\crear_munyecos.js" Line="302" Column="17" />
-      <File FileName="Assets\Scripts\dataInput.js" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\dataInput.js" Line="37" Column="4" />
       <File FileName="Assets\Scripts\operationSelection.js" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\AROperation.js" Line="356" Column="30" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

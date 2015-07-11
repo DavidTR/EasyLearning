@@ -1,24 +1,32 @@
 ﻿#pragma strict
 
-@HideInInspector
-var hit : RaycastHit;															// Objeto con el que colisiona el rayo.
-@HideInInspector
-var dataInputForm: GameObject;										// Formulario que servira para recibir los datos sobre la operacion.
-@HideInInspector
-var dataIn: boolean;													// ¿Estamos recogiendo datos?
-private var targetPosition: Vector3;
-@HideInInspector
-static var tipoOp: String;
-@HideInInspector
-var operacionSeleccionada : boolean;
+/**
+	operationSelection script: Here the operation selection action in the application is supervised.
+**/
 
+private var hit : RaycastHit;													// Object hit with the collisiion ray.
+private var dataInputForm: GameObject;								// Form user will use to introduce the operands.
+@HideInInspector
+static var insertarDatos: boolean;											// Controls if we are reading data from the dataInput form or not.
+private var posicionFinal: Vector3;											// Position where the insertarDatosput form will be positioned.
+@HideInInspector
+static var tipoOp: String;														// Operation selected by the user.
+@HideInInspector
+static var operacionSeleccionada : boolean;							// Controls if the user chooses an operation.
+
+/**
+	Start function: Initializes the references to the dataInput form, some boolean variables and the target position of the said form.
+**/
 function Start () {
 	dataInputForm = GameObject.Find("operationDataInput");
-	dataIn = false;
+	insertarDatos = false;
 	operacionSeleccionada = false;
-	targetPosition = Vector3(0,-5,10);
+	posicionFinal = Vector3(0,-5,10);
 }
 
+/**
+	Update function: Checks if the user chooses an operation.
+**/
 function Update () {
 
 	// HABILITAR PARA TACTIL
@@ -35,45 +43,42 @@ function Update () {
         }
     }
        */     
-       
-    // PRUEBAS EN PC
-	if (Input.GetButtonDown("Fire1") && !dataIn) {
+  
+	if (Input.GetButtonDown("Fire1") && !insertarDatos) {
 		var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
        if (Physics.Raycast(ray, hit, 100)) {
 	       	if (hit.collider.gameObject.name == "addOperation") {
 	           
 	            if (!operacionSeleccionada) {
-	            	adjustDataInput();
+	            	ajustarDataInput();
 	            	 tipoOp = "+";
 	            }
 	         }
 	         else 	if (hit.collider.gameObject.name == "substractOperation") {
 
 	            if (!operacionSeleccionada) {
-	            	adjustDataInput();
+	            	ajustarDataInput();
 	            	tipoOp = "-";
 	            }
 	         }
-	         // Para añadir mas operaciones, agregar botones extra aqui.
         }
 	}
 }
 
-function OnGUI() {
-	
-}
-
-function adjustDataInput () {
+/**
+	AjustarDataInput function: Moves the dataInput form to its target position.
+**/
+function ajustarDataInput () {
 	while (true) {
 			dataInputForm.transform.position.y += Time.deltaTime*3.5;
 	
-			if (dataInputForm.transform.position.y >= targetPosition.y)
+			if (dataInputForm.transform.position.y >= posicionFinal.y)
 				break;	
 			
 			yield WaitForSeconds(0.0001);
 	}
 		
-	dataIn = true;
+	insertarDatos = true;
 	operacionSeleccionada = true;
 }
