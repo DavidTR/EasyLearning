@@ -30,6 +30,7 @@ private var izquierda : int = 0;									// izquierda and derecha controls which
 private var derecha : int = 1;
 private var colocados : boolean[];							// Boolean array: In the"i" position of it we will have a 0 if the dummy is not in its final position or a 1 if it reached it.
 private var hit : RaycastHit;										// Object hit with the collision ray.
+private var simboloOp : GameObject;
 
 /**
 	Start function: Initializes variables as explained below.
@@ -37,16 +38,16 @@ private var hit : RaycastHit;										// Object hit with the collision ray.
 function Start () {
 
 	// Get the numbers given by the user.
-	numero1 = dataInput.num1;
-	numero2 = dataInput.num2;
+	//numero1 = dataInput.num1;
+	//numero2 = dataInput.num2;
 	
 	// Get the operation chosen.
-	var tipoOperacion = operationSelection.tipoOp;
+	//var tipoOperacion = operationSelection.tipoOp;
 	
 	// Debugging lines.
-	//var tipoOperacion = "+";
-	//numero1 = 2;
-	//numero2 = 3;
+	var tipoOperacion = "+";
+	numero1 = 3;
+	numero2 = 3;
 	
 	// Initially we won't check if the dummies reached their destination.
 	enPosicion = -1;
@@ -65,22 +66,27 @@ function Start () {
 		
 	// Instantiate dummies in the scene and the number (amount) of them in each side of the operation symbol.
 	yield StartCoroutine(instanciarMunecos(numero1, izquierda));
-	GameObject.Instantiate(numeros[numero1], new Vector3(-210, 0, -150), Quaternion.Euler(0,180,0));
+	var cantidad1 = GameObject.Instantiate(numeros[numero1], new Vector3(-210, 0, -150), Quaternion.Euler(0,180,0));
+	cantidad1.transform.parent = GameObject.Find("ImageTarget").transform;
 
 	yield StartCoroutine(instanciarMunecos(numero2, derecha));
-	GameObject.Instantiate(numeros[numero2], new Vector3(0, 0, -150), Quaternion.Euler(0,180,0));
+	var cantidad2 = GameObject.Instantiate(numeros[numero2], new Vector3(0, 0, -150), Quaternion.Euler(0,180,0));
+	cantidad2.transform.parent = GameObject.Find("ImageTarget").transform;
+
 		
 	// Make the dummies walk through the map to their destination in the "equal" side.
 	switch (tipoOperacion) {
 		case "+": 
 				resultadoOperacion = numero1+numero2;
 				operacionSuma(); 
-				GameObject.Instantiate(simboloSuma, new Vector3(-100, 0, -20), Quaternion.identity);
+				simboloOp = GameObject.Instantiate(simboloSuma, new Vector3(-100, 0, -20), Quaternion.identity);
+				simboloOp.transform.parent = GameObject.Find("ImageTarget").transform;
 			break;
 		case "-":	
 				resultadoOperacion = numero1-numero2;
 				operacionResta();
-				GameObject.Instantiate(simboloResta, new Vector3(-100, 0, -20), Quaternion.identity);
+				simboloOp = GameObject.Instantiate(simboloResta, new Vector3(-100, 0, -20), Quaternion.identity);
+				simboloOp.transform.parent = GameObject.Find("ImageTarget").transform;
 			break;
 	}
 	
@@ -124,7 +130,7 @@ function instanciarMunecos (numMunecos : int, lado : int) {
 			
 			munyecosIzq[i] = GameObject.Find("munyecoIzq"+(i+1));
 			munyecosIzq[i].transform.position = posicion;
-			munyecosIzq[i].transform.parent = camara.transform;                         // All dummies are child of the AR Camera.
+			//munyecosIzq[i].transform.parent = camara.transform;                         // All dummies are child of the AR Camera.
 			munyecosIzq[i].transform.Rotate(Vector3.up*180);								// Left side dummies are looking forward.
 
 		}
@@ -133,7 +139,7 @@ function instanciarMunecos (numMunecos : int, lado : int) {
 			
 			munyecosDcha[i] = GameObject.Find("munyecoDcha"+(i+1));
 			munyecosDcha[i].transform.position = posicion;
-			munyecosDcha[i].transform.parent = camara.transform;                         // All dummies are child of the AR Camera.
+			//munyecosDcha[i].transform.parent = camara.transform;                         // All dummies are child of the AR Camera.
 		}																										// Left side dummies are looking back.
 		
 		if (desplZ)
@@ -165,6 +171,7 @@ function operacionSuma () {
 			
 			munyecosIzqNav[i].GetComponent.<NavMeshAgent>().SetDestination(direccionBase + desplazamientoDestino*50);
 			munyecosIzqNav[i].GetComponent.<Animation>().Play("Walk");
+			munyecosIzqNav[i].transform.parent = GameObject.Find("ImageTarget").transform;
 			yield WaitForSeconds(1);
 		}
 				
@@ -179,6 +186,7 @@ function operacionSuma () {
 			
 			munyecosIzqNav[i].GetComponent.<NavMeshAgent>().SetDestination(direccionBase + desplazamientoDestino*50);
 			munyecosIzqNav[i].GetComponent.<Animation>().Play("Walk");
+			munyecosIzqNav[i].transform.parent = GameObject.Find("ImageTarget").transform;
 			yield WaitForSeconds(0.75);
 		}
 	}
@@ -192,6 +200,7 @@ function operacionSuma () {
 					
 			munyecosIzqNav[i].GetComponent.<NavMeshAgent>().SetDestination(direccionBase + desplazamientoDestino*50);
 			munyecosIzqNav[i].GetComponent.<Animation>().Play("Walk");
+			munyecosIzqNav[i].transform.parent = GameObject.Find("ImageTarget").transform;
 			yield WaitForSeconds(0.75);
 		}
 	}
@@ -209,6 +218,7 @@ function operacionSuma () {
 			
 			munyecosDchaNav[j].GetComponent.<NavMeshAgent>().SetDestination(direccionBase + desplazamientoDestino*50);
 			munyecosDchaNav[j].GetComponent.<Animation>().Play("Walk");
+			munyecosDchaNav[j].transform.parent = GameObject.Find("ImageTarget").transform;
 			yield WaitForSeconds(1);
 		}
 		
@@ -223,6 +233,7 @@ function operacionSuma () {
 				
 			munyecosDchaNav[j].GetComponent.<NavMeshAgent>().SetDestination(direccionBase + desplazamientoDestino*50);
 			munyecosDchaNav[j].GetComponent.<Animation>().Play("Walk");
+			munyecosDchaNav[j].transform.parent = GameObject.Find("ImageTarget").transform;
 			yield WaitForSeconds(0.75);
 		}
 	}
@@ -236,6 +247,7 @@ function operacionSuma () {
 				
 			munyecosDchaNav[j].GetComponent.<NavMeshAgent>().SetDestination(direccionBase + desplazamientoDestino*50);
 			munyecosDchaNav[j].GetComponent.<Animation>().Play("Walk");
+			munyecosDchaNav[j].transform.parent = GameObject.Find("ImageTarget").transform;
 			yield WaitForSeconds(0.75);
 		}
 	}
@@ -333,7 +345,8 @@ function Update () {
 	
 	// If all the dummies are in position, the operation is finished.
 	if (!finOperacion && (enPosicion == resultadoOperacion)) {
-		GameObject.Instantiate(numeros[resultadoOperacion], new Vector3(250, 0, -150), Quaternion.Euler(0,180,0));
+		var numResultado = GameObject.Instantiate(numeros[resultadoOperacion], new Vector3(250, 0, -150), Quaternion.Euler(0,180,0));
+		numResultado.transform.parent = GameObject.Find("ImageTarget").transform;
 		finOperacion = true;
 	}
 	
