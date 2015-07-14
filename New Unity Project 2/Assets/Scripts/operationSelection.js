@@ -55,12 +55,16 @@ function Update () {
 	            	 tipoOp = "+";
 	            }
 	         }
-	         else 	if (hit.collider.gameObject.name == "substractOperation") {
+	         else if (hit.collider.gameObject.name == "substractOperation") {
 
 	            if (!operacionSeleccionada) {
 	            	ajustarDataInput();
 	            	tipoOp = "-";
 	            }
+	         }
+	         else if (hit.collider.gameObject.name == "exitButton") {
+	         	print("Salir");
+	            Application.Quit();
 	         }
         }
 	}
