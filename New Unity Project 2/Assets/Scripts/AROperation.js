@@ -126,7 +126,7 @@ function instanciarMunecos (numMunecos : int, lado : int) {
 		coordenadas = Vector3((coordenadas.x+25)*desplX, 0, coordenadas.z-(25*desplZ));
 		
 		if (lado == izquierda) {
-			posicion = Vector3(coordenadas.x-125, 0, coordenadas.z);
+			posicion = Vector3(coordenadas.x-125, -1, coordenadas.z);
 			
 			munyecosIzq[i] = GameObject.Find("munyecoIzq"+(i+1));
 			munyecosIzq[i].transform.position = posicion;
@@ -135,7 +135,7 @@ function instanciarMunecos (numMunecos : int, lado : int) {
 
 		}
 		else {
-			posicion = Vector3(coordenadas.x-20, 0, coordenadas.z);
+			posicion = Vector3(coordenadas.x-20, -1, coordenadas.z);
 			
 			munyecosDcha[i] = GameObject.Find("munyecoDcha"+(i+1));
 			munyecosDcha[i].transform.position = posicion;
