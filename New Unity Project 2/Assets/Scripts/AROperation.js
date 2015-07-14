@@ -25,7 +25,7 @@ private var enPosicion : int;										// Counts how many dummies reached their 
 private var resultadoOperacion : int;							// Result of the operation requested.
 private var agente : NavMeshAgent;							// Navigation agent. This component will make the dummies move intelligently through the map.
 private var finOperacion : boolean;							// Checks if the operation is finished, so the back button can be shown.
-private var direccionBase = new Vector3(90, 0, 7);	// Base coordinates for the dummies. The offset will be added to place them according to the formation.
+private var direccionBase = new Vector3(200, 0, 35);	// Base coordinates for the dummies. The offset will be added to place them according to the formation.
 private var izquierda : int = 0;									// izquierda and derecha controls which side of the operation symbol are we using to place the dummies.
 private var derecha : int = 1;
 private var colocados : boolean[];							// Boolean array: In the"i" position of it we will have a 0 if the dummy is not in its final position or a 1 if it reached it.
@@ -66,11 +66,11 @@ function Start () {
 		
 	// Instantiate dummies in the scene and the number (amount) of them in each side of the operation symbol.
 	yield StartCoroutine(instanciarMunecos(numero1, izquierda));
-	var cantidad1 = GameObject.Instantiate(numeros[numero1], new Vector3(-110, 0, -75), Quaternion.Euler(0,180,0));
+	var cantidad1 = GameObject.Instantiate(numeros[numero1], new Vector3(-210, 0, -150), Quaternion.Euler(0,180,0));
 	cantidad1.transform.parent = GameObject.Find("ImageTarget").transform;
 
 	yield StartCoroutine(instanciarMunecos(numero2, derecha));
-	var cantidad2 = GameObject.Instantiate(numeros[numero2], new Vector3(20, 0, -75), Quaternion.Euler(0,180,0));
+	var cantidad2 = GameObject.Instantiate(numeros[numero2], new Vector3(0, 0, -150), Quaternion.Euler(0,180,0));
 	cantidad2.transform.parent = GameObject.Find("ImageTarget").transform;
 
 		
@@ -79,13 +79,13 @@ function Start () {
 		case "+": 
 				resultadoOperacion = numero1+numero2;
 				operacionSuma(); 
-				simboloOp = GameObject.Instantiate(simboloSuma, new Vector3(-50, 0, -10), Quaternion.identity);
+				simboloOp = GameObject.Instantiate(simboloSuma, new Vector3(-100, 0, -20), Quaternion.identity);
 				simboloOp.transform.parent = GameObject.Find("ImageTarget").transform;
 			break;
 		case "-":	
 				resultadoOperacion = numero1-numero2;
 				operacionResta();
-				simboloOp = GameObject.Instantiate(simboloResta, new Vector3(-50, 0, -10), Quaternion.identity);
+				simboloOp = GameObject.Instantiate(simboloResta, new Vector3(-100, 0, -20), Quaternion.identity);
 				simboloOp.transform.parent = GameObject.Find("ImageTarget").transform;
 			break;
 	}
@@ -123,10 +123,10 @@ function instanciarMunecos (numMunecos : int, lado : int) {
 			desplZ = 1;
 		
 		// coordenadas will keep the result of all the calculations made in the previous lines.
-		coordenadas = Vector3((coordenadas.x+25)*desplX, 0, coordenadas.z-(25*desplZ));
+		coordenadas = Vector3((coordenadas.x+50)*desplX, 0, coordenadas.z-(50*desplZ));
 		
 		if (lado == izquierda) {
-			posicion = Vector3(coordenadas.x-125, -1, coordenadas.z);
+			posicion = Vector3(coordenadas.x-250, 0, coordenadas.z);
 			
 			munyecosIzq[i] = GameObject.Find("munyecoIzq"+(i+1));
 			munyecosIzq[i].transform.position = posicion;
@@ -135,7 +135,7 @@ function instanciarMunecos (numMunecos : int, lado : int) {
 
 		}
 		else {
-			posicion = Vector3(coordenadas.x-20, -1, coordenadas.z);
+			posicion = Vector3(coordenadas.x-40, 0, coordenadas.z);
 			
 			munyecosDcha[i] = GameObject.Find("munyecoDcha"+(i+1));
 			munyecosDcha[i].transform.position = posicion;
@@ -169,8 +169,7 @@ function operacionSuma () {
 			
 			desplazamientoDestino.z = -i/3;
 			
-			munyecosIzqNav[i].GetComponent.<NavMeshAgent>().SetDestination(direccionBase + desplazamientoDestino*25);
-			munyecosIzqNav[i].transform.localScale = new Vector3 (0.3, 0.3, 0.3);
+			munyecosIzqNav[i].GetComponent.<NavMeshAgent>().SetDestination(direccionBase + desplazamientoDestino*50);
 			munyecosIzqNav[i].GetComponent.<Animation>().Play("Walk");
 			munyecosIzqNav[i].transform.parent = GameObject.Find("ImageTarget").transform;
 			yield WaitForSeconds(1);
@@ -185,8 +184,7 @@ function operacionSuma () {
 			
 			desplazamientoDestino.z = -i/3;
 			
-			munyecosIzqNav[i].GetComponent.<NavMeshAgent>().SetDestination(direccionBase + desplazamientoDestino*25);
-			munyecosIzqNav[i].transform.localScale = new Vector3 (0.3, 0.3, 0.3);
+			munyecosIzqNav[i].GetComponent.<NavMeshAgent>().SetDestination(direccionBase + desplazamientoDestino*50);
 			munyecosIzqNav[i].GetComponent.<Animation>().Play("Walk");
 			munyecosIzqNav[i].transform.parent = GameObject.Find("ImageTarget").transform;
 			yield WaitForSeconds(0.75);
@@ -200,8 +198,7 @@ function operacionSuma () {
 			
 			// Here the number of dummies is less than 3, so no Z offset is required (we will have only one row of dummies).
 					
-			munyecosIzqNav[i].GetComponent.<NavMeshAgent>().SetDestination(direccionBase + desplazamientoDestino*25);
-			munyecosIzqNav[i].transform.localScale = new Vector3 (0.3, 0.3, 0.3);
+			munyecosIzqNav[i].GetComponent.<NavMeshAgent>().SetDestination(direccionBase + desplazamientoDestino*50);
 			munyecosIzqNav[i].GetComponent.<Animation>().Play("Walk");
 			munyecosIzqNav[i].transform.parent = GameObject.Find("ImageTarget").transform;
 			yield WaitForSeconds(0.75);
@@ -219,8 +216,7 @@ function operacionSuma () {
 			
 			desplazamientoDestino.z = -(j+numero1)/3;
 			
-			munyecosDchaNav[j].GetComponent.<NavMeshAgent>().SetDestination(direccionBase + desplazamientoDestino*25);
-			munyecosDchaNav[j].transform.localScale = new Vector3 (0.3, 0.3, 0.3);
+			munyecosDchaNav[j].GetComponent.<NavMeshAgent>().SetDestination(direccionBase + desplazamientoDestino*50);
 			munyecosDchaNav[j].GetComponent.<Animation>().Play("Walk");
 			munyecosDchaNav[j].transform.parent = GameObject.Find("ImageTarget").transform;
 			yield WaitForSeconds(1);
@@ -235,8 +231,7 @@ function operacionSuma () {
 			
 			desplazamientoDestino.z = -(j+numero1)/3;
 				
-			munyecosDchaNav[j].GetComponent.<NavMeshAgent>().SetDestination(direccionBase + desplazamientoDestino*25);
-			munyecosDchaNav[j].transform.localScale = new Vector3 (0.3, 0.3, 0.3);
+			munyecosDchaNav[j].GetComponent.<NavMeshAgent>().SetDestination(direccionBase + desplazamientoDestino*50);
 			munyecosDchaNav[j].GetComponent.<Animation>().Play("Walk");
 			munyecosDchaNav[j].transform.parent = GameObject.Find("ImageTarget").transform;
 			yield WaitForSeconds(0.75);
@@ -250,8 +245,7 @@ function operacionSuma () {
 			
 			desplazamientoDestino.z = -(j+numero1)/3;
 				
-			munyecosDchaNav[j].GetComponent.<NavMeshAgent>().SetDestination(direccionBase + desplazamientoDestino*25);
-			munyecosDchaNav[j].transform.localScale = new Vector3 (0.3, 0.3, 0.3);
+			munyecosDchaNav[j].GetComponent.<NavMeshAgent>().SetDestination(direccionBase + desplazamientoDestino*50);
 			munyecosDchaNav[j].GetComponent.<Animation>().Play("Walk");
 			munyecosDchaNav[j].transform.parent = GameObject.Find("ImageTarget").transform;
 			yield WaitForSeconds(0.75);
@@ -270,6 +264,8 @@ function operacionResta() {
 
 	// In this case we will have only left side dummies walking through the map (we don't allow negative results).
 	munyecosIzqNav = new GameObject[numero1-numero2];
+	munyecosDchaNav = new GameObject[0];
+
 
 	// The first row will move before the second one, so the result is more smooth.
 	if (resultadoOperacion >= 3) {
@@ -351,7 +347,7 @@ function Update () {
 	
 	// If all the dummies are in position, the operation is finished.
 	if (!finOperacion && (enPosicion == resultadoOperacion)) {
-		var numResultado = GameObject.Instantiate(numeros[resultadoOperacion], new Vector3(125, 0, -75), Quaternion.Euler(0,180,0));
+		var numResultado = GameObject.Instantiate(numeros[resultadoOperacion], new Vector3(250, 0, -150), Quaternion.Euler(0,180,0));
 		numResultado.transform.parent = GameObject.Find("ImageTarget").transform;
 		finOperacion = true;
 	}

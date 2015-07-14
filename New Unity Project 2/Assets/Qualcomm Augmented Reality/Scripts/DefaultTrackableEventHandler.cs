@@ -100,6 +100,8 @@ namespace Vuforia
                 component.enabled = false;
             }
 
+			//GameObject.Find ("backButton").GetComponent<MeshRenderer>().enabled = false;
+
             // Disable colliders:
             foreach (Collider component in colliderComponents)
             {

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QCARConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="qcar_config.xsd">
   <Tracking>
-    <ImageTarget name="cobble" size="400.000000 266.666656" />
+    <ImageTarget name="cobble800" size="800.000000 531.250000" />
   </Tracking>
 </QCARConfig>

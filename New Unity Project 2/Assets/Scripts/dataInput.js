@@ -19,7 +19,6 @@ private var hit : RaycastHit;															// Object hit with the collisiion ra
 static var num1: int;																	// First number of the operation parsed to integer.
 @HideInInspector
 static var num2: int;																	// Second number of the operation parsed to integer.
-var estilo : GUIStyle;
 
 
 /** 
