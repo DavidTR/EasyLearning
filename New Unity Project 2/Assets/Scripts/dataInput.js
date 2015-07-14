@@ -19,6 +19,7 @@ private var hit : RaycastHit;															// Object hit with the collisiion ra
 static var num1: int;																	// First number of the operation parsed to integer.
 @HideInInspector
 static var num2: int;																	// Second number of the operation parsed to integer.
+var estilo : GUIStyle;
 
 
 /** 
@@ -62,14 +63,14 @@ function Update () {
 function OnGUI() {
 	if (mostrarBotones) {
 			
-		operando1 = GUI.TextField(new Rect(Screen.width/3.5 , Screen.height/1.3+5, 40, 20), operando1, 3);
+		operando1 = GUI.TextField(new Rect(Screen.width/3.5 , Screen.height/1.3, 100, 60), operando1, 3);
 		operando1 = Regex.Replace(operando1, "[^0-9]", "");
 		
-		operando2 = GUI.TextField(new Rect(Screen.width/1.9 , Screen.height/1.3+5, 40, 20), operando2, 3);
+		operando2 = GUI.TextField(new Rect(Screen.width/1.9 , Screen.height/1.3, 100, 60), operando2, 3);
 		operando2 = Regex.Replace(operando2, "[^0-9]", "");
 	
 		// Hacer estas coordenadas independientes de la pantalla (relativas a algun objeto del mundo).
-		if (GUI.Button(new Rect(Screen.width/1.55 , Screen.height/1.3, 50, 30), "=") && numerosEnRango && !sinNumeros) {
+		if (GUI.Button(new Rect(Screen.width/1.55 , Screen.height/1.3, 100, 60), "=") && numerosEnRango && !sinNumeros) {
 			if (operando1 == "" || operando2 == "")
 				sinNumeros = true;
 			else {
@@ -94,7 +95,7 @@ function OnGUI() {
 		if (sinNumeros)
 			ventanaAviso = GUILayout.Window (3, ventanaAviso, rellenarVentana, "Error: No has introducido numeros");
 			
-		if (GUI.Button(new Rect(Screen.width/2.45 , Screen.height/1.3, 40, 30), operationSelection.tipoOp)) {}
+		if (GUI.Button(new Rect(Screen.width/2.45 , Screen.height/1.3, 100, 60), operationSelection.tipoOp)) {}
 	}
 }
 
