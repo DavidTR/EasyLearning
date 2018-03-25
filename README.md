@@ -1,2 +1,2 @@
 # EasyLearning
-Provisional name of the project for the subject CUIA
+Augmented Reality Android App for teaching kids basic maths
